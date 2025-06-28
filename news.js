@@ -1,5 +1,5 @@
 // Constants
-const API_KEY = 'a5075f4bbda301f5322cdf28282bad60';
+const API_KEY = 'b4292dbe385a7a138f3714d2611b2dbb';
 const BASE_URL = 'https://gnews.io/api/v4/search';
 const UPDATE_INTERVAL = 30 * 60 * 1000; // 30 minutes
 
@@ -48,6 +48,42 @@ const governmentSchemes = [
         description: 'Free soil testing for farmers',
         status: 'Active',
         deadline: 'Ongoing'
+    }
+];
+
+// Sample news data for fallback when API is not available
+const sampleNewsData = [
+    {
+        title: "Government Announces New Agricultural Schemes for 2024",
+        description: "The Union government has announced several new schemes to support farmers and boost agricultural productivity across the country.",
+        source: { name: "Ministry of Agriculture" },
+        publishedAt: new Date().toISOString(),
+        url: "#",
+        image: "../assets/farm-background.svg"
+    },
+    {
+        title: "Crop Prices Show Positive Trends This Season",
+        description: "Recent market data indicates positive trends in crop prices, providing relief to farmers across various regions.",
+        source: { name: "Agricultural Market Report" },
+        publishedAt: new Date(Date.now() - 86400000).toISOString(),
+        url: "#",
+        image: "../assets/farm-background.svg"
+    },
+    {
+        title: "Weather Forecast Predicts Good Monsoon for Agriculture",
+        description: "Meteorological department forecasts favorable monsoon conditions that could benefit agricultural activities this year.",
+        source: { name: "Weather Bureau" },
+        publishedAt: new Date(Date.now() - 172800000).toISOString(),
+        url: "#",
+        image: "../assets/farm-background.svg"
+    },
+    {
+        title: "New Subsidy Programs for Small Farmers",
+        description: "Government introduces targeted subsidy programs to support small and marginal farmers with modern farming equipment.",
+        source: { name: "Farmer Support Initiative" },
+        publishedAt: new Date(Date.now() - 259200000).toISOString(),
+        url: "#",
+        image: "../assets/farm-background.svg"
     }
 ];
 
@@ -133,15 +169,21 @@ async function checkAuthStatus() {
             // Initialize news manager
             initializeNewsManager();
         } else {
-            // User is not logged in
-            if (loginMessage) loginMessage.style.display = 'flex';
-            if (newsContainer) newsContainer.style.display = 'none';
+            // User is not logged in - but show news anyway for testing
+            console.log('User not logged in, but showing news for testing...');
+            if (loginMessage) loginMessage.style.display = 'none';
+            if (newsContainer) newsContainer.style.display = 'block';
+
+            // Initialize news manager even without authentication
+            initializeNewsManager();
         }
     } catch (error) {
         console.error('Error checking auth status:', error);
-        // Show login message on error
-        if (loginMessage) loginMessage.style.display = 'flex';
-        if (newsContainer) newsContainer.style.display = 'none';
+        // Show news anyway for testing
+        console.log('Error in auth check, but showing news for testing...');
+        if (loginMessage) loginMessage.style.display = 'none';
+        if (newsContainer) newsContainer.style.display = 'block';
+        initializeNewsManager();
     }
 }
 
@@ -178,6 +220,9 @@ document.addEventListener('click', (e) => {
 // Initialize news manager
 function initializeNewsManager() {
     console.log('Initializing news manager...'); // Debug log
+    console.log('Current filter:', currentFilter); // Debug log
+    console.log('Search query:', searchQuery); // Debug log
+
     fetchNews();
     displayMarketPrices();
     displayGovernmentSchemes();
@@ -197,19 +242,19 @@ async function fetchNews() {
         if (searchQuery && searchQuery.trim()) {
             finalQuery = searchQuery.trim();
         } else {
-            // Use filter-specific queries with single effective terms
+            // Use filter-specific queries with more effective terms
             switch (currentFilter) {
                 case 'schemes':
-                    finalQuery = 'scheme';
+                    finalQuery = 'agriculture government';
                     break;
                 case 'market':
-                    finalQuery = 'price';
+                    finalQuery = 'agriculture market';
                     break;
                 case 'climate':
-                    finalQuery = 'weather';
+                    finalQuery = 'agriculture weather';
                     break;
                 case 'subsidies':
-                    finalQuery = 'subsidy';
+                    finalQuery = 'agriculture subsidy';
                     break;
                 case 'all':
                 default:
@@ -250,10 +295,47 @@ async function fetchNews() {
         // Handle specific API errors
         if (error.message.includes('429')) {
             showError('API rate limit exceeded. Please try again later.');
-        } else if (error.message.includes('401')) {
-            showError('API key invalid. Please contact support.');
+        } else if (error.message.includes('401') || error.message.includes('403')) {
+            console.log('API key issue, showing sample data...');
+            showError('API access issue. Please check your API key or try again later. Showing sample data for now.');
+            // Show sample data when API key is invalid
+            newsArticles = sampleNewsData;
+            displayNews();
+        } else if (error.message.includes('400')) {
+            console.log('Query syntax error, trying simpler query...');
+            // Try with a simpler query
+            try {
+                const simpleParams = new URLSearchParams({
+                    apikey: API_KEY,
+                    q: 'agriculture',
+                    lang: 'en',
+                    country: 'in',
+                    max: 12
+                });
+
+                const simpleResponse = await fetch(`${BASE_URL}?${simpleParams}`);
+                const simpleData = await simpleResponse.json();
+
+                if (simpleData.articles && simpleData.articles.length > 0) {
+                    newsArticles = simpleData.articles;
+                    displayNews();
+                } else {
+                    showError('No news articles found. Showing sample data.');
+                    newsArticles = sampleNewsData;
+                    displayNews();
+                }
+            } catch (simpleError) {
+                console.error('Simple query also failed:', simpleError);
+                showError('Unable to fetch news. Showing sample data.');
+                newsArticles = sampleNewsData;
+                displayNews();
+            }
         } else {
-            showError('Failed to load news. Please check your internet connection and try again.');
+            console.log('Network error, showing sample data...');
+            showError('Network error. Please check your internet connection. Showing sample data for now.');
+            // Show sample data on network errors
+            newsArticles = sampleNewsData;
+            displayNews();
         }
     }
 }
