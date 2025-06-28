@@ -1,0 +1,482 @@
+/* Import navbar styles */
+@import url('../styles.css');
+
+:root {
+    --primary: #4CAF50;
+    --secondary: #2196F3;
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --light-text: #666666;
+    --border-color: #e0e0e0;
+    --success: #4CAF50;
+    --danger: #f44336;
+    --warning: #ff9800;
+    --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+/* Container Styles */
+.news-container {
+    max-width: 1200px;
+    margin: 90px auto 2rem;
+    padding: 2rem;
+}
+
+/* Search Section */
+.search-section {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.search-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.search-bar button {
+    padding: 0.8rem 1.5rem;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+}
+
+.search-bar button:hover {
+    opacity: 0.9;
+}
+
+#clear-search-btn {
+    background: var(--danger) !important;
+    padding: 0.8rem !important;
+    min-width: 50px;
+}
+
+#clear-search-btn:hover {
+    background: #d32f2f !important;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.8rem 1.5rem;
+    background: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--gradient);
+    color: white;
+    border-color: transparent;
+}
+
+/* Content Layout */
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2rem;
+}
+
+/* News Section */
+.news-section {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.news-section h2 {
+    margin: 0 0 1.5rem 0;
+    color: var(--text-color);
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.news-card {
+    background: var(--bg-color);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+}
+
+.news-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-content {
+    padding: 1.5rem;
+}
+
+.news-title {
+    margin: 0 0 1rem 0;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+.news-meta {
+    display: flex;
+    justify-content: space-between;
+    color: var(--light-text);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.news-description {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.read-more {
+    display: inline-block;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.read-more:hover {
+    color: var(--secondary);
+}
+
+/* Sidebar */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Government Schemes Section */
+.schemes-section {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.schemes-section h3 {
+    margin: 0 0 1.5rem 0;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.schemes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.scheme-card {
+    background: var(--bg-color);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+}
+
+.scheme-card h4 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.scheme-card p {
+    margin: 0 0 1rem 0;
+    color: var(--light-text);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.scheme-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-badge.active {
+    background: var(--success);
+    color: white;
+}
+
+.status-badge.inactive {
+    background: var(--danger);
+    color: white;
+}
+
+.deadline {
+    font-size: 0.8rem;
+    color: var(--light-text);
+}
+
+/* Market Section */
+.market-section {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.market-section h3 {
+    margin: 0 0 1.5rem 0;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.market-prices {
+    margin-bottom: 1rem;
+}
+
+.market-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.market-item:last-child {
+    border-bottom: none;
+}
+
+.crop-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.crop-name {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.crop-change {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.crop-change.positive {
+    color: var(--success);
+}
+
+.crop-change.negative {
+    color: var(--danger);
+}
+
+.crop-price {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.last-updated {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Loading and Error States */
+.loading-spinner {
+    text-align: center;
+    padding: 2rem;
+    color: var(--light-text);
+}
+
+.loading-spinner i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.error-message {
+    text-align: center;
+    padding: 2rem;
+    color: var(--danger);
+}
+
+.error-message i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.retry-btn {
+    padding: 0.8rem 1.5rem;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: opacity 0.3s;
+}
+
+.retry-btn:hover {
+    opacity: 0.9;
+}
+
+/* Login Message */
+.login-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 2rem;
+}
+
+.login-message .message-content {
+    text-align: center;
+    background: var(--card-bg);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+}
+
+.login-message i {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.login-message h2 {
+    margin: 0 0 1rem 0;
+    color: var(--text-color);
+}
+
+.login-message p {
+    margin: 0 0 2rem 0;
+    color: var(--light-text);
+    line-height: 1.6;
+}
+
+.login-redirect-btn {
+    padding: 1rem 2rem;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.login-redirect-btn:hover {
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .content-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .news-container {
+        padding: 1rem;
+        margin-top: 80px;
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-buttons {
+        justify-content: center;
+    }
+
+    .filter-btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-bar {
+        flex-direction: column;
+    }
+
+    .search-bar button {
+        width: 100%;
+    }
+
+    .schemes-section,
+    .market-section {
+        padding: 1rem;
+    }
+
+    .scheme-card {
+        padding: 0.8rem;
+    }
+
+    .market-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
