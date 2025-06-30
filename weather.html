@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriConnect - Weather Forecast</title>
+    <link rel="stylesheet" href="../home.css">
+    <link rel="stylesheet" href="weather.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/logo.svg" alt="Logo">
+            <span>AgriConnect</span>
+        </div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="home.html#services">Services</a>
+            <a href="home.html#about">About Us</a>
+            <a href="message.html"><i class="fas fa-comments"></i> Messages</a>
+        </div>
+        <div class="auth-buttons">
+            <!-- Profile Dropdown (Initially hidden by JS, shown when logged in) -->
+            <div class="profile-dropdown" id="nav-profile-dropdown">
+                <div class="profile-trigger">
+                    <img src="assets/default-avatar.svg" alt="Profile" class="profile-image" id="nav-profile-image">
+                    <span class="profile-name" id="nav-profile-name">User</span>
+                </div>
+                <div class="dropdown-content">
+                    <a href="profile.html" class="dropdown-item">
+                        <i class="fas fa-user"></i>
+                        My Profile
+                    </a>
+                    <a href="message.html" class="dropdown-item" id="notification-button">
+                        <i class="fas fa-bell"></i>
+                        Notifications <span class="notification-count" style="display:none;">0</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="nav-logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section for Weather Page -->
+    <section class="hero weather-hero">
+        <div class="weather-hero-bg"></div>
+        <div class="hero-content">
+            <h1>Weather & Crop Insights</h1>
+            <p>Get real-time weather updates and personalized crop suggestions for your farm.</p>
+        </div>
+    </section>
+
+    <!-- Weather Content -->
+    <div class="weather-container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="text" id="city-search" placeholder="Enter city name...">
+                <button id="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="recent-searches">
+                <h3>Recent Searches</h3>
+                <div id="recent-list"></div>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="error-message" class="error-message" style="display: none;">
+            City not found. Please try again.
+        </div>
+
+        <!-- Current Weather Section -->
+        <div class="current-weather" style="display: none;">
+            <div class="weather-header">
+                <h2 id="city-name">City Name</h2>
+                <p id="current-date">Date and Time</p>
+            </div>
+            <div class="weather-info">
+                <div class="weather-main">
+                    <img id="weather-icon" src="" alt="Weather Icon">
+                    <div class="temperature">
+                        <h1 id="temperature">--°C</h1>
+                        <p id="weather-condition">Weather Condition</p>
+                    </div>
+                </div>
+                <div class="weather-details">
+                    <div class="detail humidity">
+                        <i class="fas fa-tint"></i>
+                        <span>Humidity: </span>
+                        <span id="humidity">--%</span>
+                    </div>
+                    <div class="detail wind">
+                        <i class="fas fa-wind"></i>
+                        <span>Wind: </span>
+                        <span id="wind-speed">-- km/h</span>
+                    </div>
+                    <div class="detail rainfall">
+                        <i class="fas fa-cloud-rain"></i>
+                        <span>Rainfall: </span>
+                        <span id="rainfall">-- mm</span>
+                    </div>
+                    <div class="detail sunrise">
+                        <i class="fas fa-sun"></i>
+                        <span>Sunrise: </span>
+                        <span id="sunrise">--:--</span>
+                    </div>
+                    <div class="detail sunset">
+                        <i class="fas fa-moon"></i>
+                        <span>Sunset: </span>
+                        <span id="sunset">--:--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 24-Hour Forecast Section -->
+        <div class="hourly-forecast" style="display: none;">
+            <h2>24-Hour Forecast</h2>
+            <div class="hourly-scroll">
+                <button class="scroll-btn scroll-left">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="hourly-container" id="hourly-container">
+                    <!-- Hourly forecast cards will be added here dynamically -->
+                </div>
+                <button class="scroll-btn scroll-right">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Agricultural Advice Section -->
+        <div class="agri-advice" style="display: none;">
+            <div class="agri-advice-header">
+                <h2>Crop Suggestions</h2>
+                <button id="refresh-suggestions-btn" class="refresh-suggestions-btn">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+            <div class="advice-container">
+                <div class="advice-card">
+                    <div class="advice-header">
+                        <i id="advice-icon" class="fas fa-leaf"></i>
+                        <h3 id="advice-title">Suggestions based on weather</h3>
+                    </div>
+                    <p id="advice-description">Loading crop suggestions...</p>
+                </div>
+                <div class="reasons-card">
+                    <h3>Suggested Crops:</h3>
+                    <ul id="advice-reasons">
+                        <!-- Crop suggestions will be dynamically inserted here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5-Day Forecast Section -->
+        <div class="forecast-section" style="display: none;">
+            <h2>7-Day Forecast</h2>
+            <div class="forecast-container" id="forecast-container">
+                <!-- Forecast cards will be added here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script src="weather.js"></script>
+</body>
+
+</html>
