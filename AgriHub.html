@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriConnect - Agri-News</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="news.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="message.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/logo.svg" alt="Logo">
+            <span>AgriConnect</span>
+        </div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="home.html#services">Services</a>
+            <a href="home.html#about">About Us</a>
+            <a href="message.html"><i class="fas fa-comments"></i> Messages</a>
+        </div>
+        <div class="auth-buttons">
+            <button class="login-btn" id="nav-login-btn" onclick="window.location.href='login.html'">Login</button>
+            <!-- Profile Dropdown (Initially hidden by JS, shown when logged in) -->
+            <div class="profile-dropdown" id="nav-profile-dropdown">
+                <div class="profile-trigger">
+                    <img src="assets/default-avatar.svg" alt="Profile" class="profile-image" id="nav-profile-image">
+                    <span class="profile-name" id="nav-profile-name">User</span>
+                </div>
+
+                <div class="dropdown-content">
+                    <a href="profile.html" class="dropdown-item">
+                        <i class="fas fa-user"></i>
+                        My Profile
+                    </a>
+                    <a href="message.html" class="dropdown-item" id="notification-button">
+                        <i class="fas fa-bell"></i>
+                        Notifications <span class="notification-count" style="display:none;">0</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="nav-logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Agri-News Section -->
+    <section class="news-section">
+        <div class="container">
+            <h1>Top Agricultural News Sources</h1>
+            <p class="subtitle">Click on a card to visit the news source</p>
+            <div class="news-grid">
+
+                <!-- Krishi Jagran -->
+                <a href="https://www.krishijagran.com" target="_blank" class="news-card">
+                    <div class="card-icon">
+                        <i class="fas fa-tractor"></i>
+                    </div>
+                    <h3>Krishi Jagran</h3>
+                    <p>Covers news, mandi prices, weather, and policy in multiple Indian languages.</p>
+                </a>
+
+                <!-- Down To Earth -->
+                <a href="https://www.downtoearth.org.in/category/agriculture" target="_blank" class="news-card">
+                    <div class="card-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Down To Earth</h3>
+                    <p>In-depth journalism on agriculture, environment, and climate impact.</p>
+                </a>
+
+                <!-- The Hindu - Agriculture -->
+                <a href="https://www.thehindu.com/sci-tech/agriculture/" target="_blank" class="news-card">
+                    <div class="card-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <h3>The Hindu - Agriculture</h3>
+                    <p>Covers agri policy, rural issues, and farming techniques.</p>
+                </a>
+
+                <!-- AgFunderNews -->
+                <a href="https://www.agfundernews.com" target="_blank" class="news-card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>AgFunderNews</h3>
+                    <p>Focus on global agri-foodtech, startups, funding, and innovation.</p>
+                </a>
+
+                <!-- AgWeb by Farm Journal -->
+                <a href="https://www.agweb.com" target="_blank" class="news-card">
+                    <div class="card-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>AgWeb by Farm Journal</h3>
+                    <p>Covers crop/livestock market news, ag policy, weather, and analysis.</p>
+                </a>
+
+                <!-- Successful Farming -->
+                <a href="https://www.agriculture.com" target="_blank" class="news-card">
+                    <div class="card-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Successful Farming</h3>
+                    <p>Practical farming tips, tools, commodity prices, and weather.</p>
+                </a>
+
+                <!-- The Western Producer -->
+                <a href="https://www.producer.com/" target="_blank" class="news-card">
+                    <div class="card-icon">
+                        <i class="fab fa-canadian-maple-leaf"></i>
+                    </div>
+                    <h3>The Western Producer</h3>
+                    <p>News and information for Western Canadian farmers.</p>
+                </a>
+
+                <!-- ICAR India -->
+                <a href="https://icar.org.in/news" target="_blank" class="news-card">
+                    <div class="card-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>ICAR India</h3>
+                    <p>Scientific research, innovations, and news from agricultural research institutions in India.</p>
+                </a>
+
+                <!-- AgriMarket (highlighted) -->
+                <a href="https://agmarknet.gov.in/" target="_blank" class="news-card highlight-agmarket">
+                    <div class="card-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>AgriMarket</h3>
+                    <p>Access real-time mandi prices, arrivals, and agri-market information across India.</p>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer can be added here if needed -->
+    <script src="message.js"></script>
+    <script src="home.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loginButton = document.getElementById('nav-login-btn');
+            const profileDropdown = document.getElementById('nav-profile-dropdown');
+            const profileNameNav = document.getElementById('nav-profile-name');
+            const profileImageNav = document.getElementById('nav-profile-image');
+            const logoutButton = document.getElementById('nav-logout-btn');
+
+            // Default state: User is logged out
+            if (loginButton) loginButton.style.display = 'flex'; // Or 'block'
+            if (profileDropdown) profileDropdown.style.display = 'none';
+
+            const { data: { session }, error } = await supabase.auth.getSession();
+
+            if (error) {
+                console.error('Error getting session for UI update:', error);
+                // Keep default (logged out) state
+                return;
+            }
+
+            if (session && session.user) {
+                // User is logged in
+                if (loginButton) loginButton.style.display = 'none';
+                if (profileDropdown) profileDropdown.style.display = 'flex'; // Or 'block'
+
+                // Use getCurrentUserProfile from auth.js as it's designed for current user
+                const profile = await getCurrentUserProfile();
+                if (profile) {
+                    if (profileNameNav) profileNameNav.textContent = profile.full_name || session.user.email;
+                    if (profile.avatar_url && profileImageNav) {
+                        profileImageNav.src = profile.avatar_url;
+                    } else if (profileImageNav) {
+                        profileImageNav.src = 'assets/default-avatar.svg'; // Fallback
+                    }
+                } else {
+                    if (profileNameNav) profileNameNav.textContent = session.user.email; // Fallback to email
+                    if (profileImageNav) profileImageNav.src = 'assets/default-avatar.svg';
+                }
+
+                if (logoutButton) {
+                    logoutButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        logout(); // from auth.js
+                    });
+                }
+            } else {
+                // User is not logged in - state is already set by default above
+                // Ensure login button's onclick is present if it was dynamically added or modified
+                if (loginButton && !loginButton.onclick) {
+                    loginButton.onclick = () => { window.location.href = 'login.html'; };
+                }
+            }
+
+            // Hamburger menu toggle (from your home.js, ensure it doesn't conflict or is needed here)
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const authButtons = document.querySelector('.auth-buttons');
+
+            if (hamburger && navLinks && authButtons) {
+                hamburger.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    authButtons.classList.toggle('active');
+                });
+            }
+
+            // Profile dropdown toggle (if not handled globally or by home.js)
+            const profileTrigger = document.querySelector('.profile-trigger');
+            if (profileTrigger) {
+                profileTrigger.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent window click from closing it immediately
+                    const content = profileTrigger.nextElementSibling;
+                    if (content && content.classList.contains('dropdown-content')) {
+                        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                    }
+                });
+            }
+            // Close dropdown if clicked outside
+            window.addEventListener('click', function (event) {
+                if (profileDropdown && !profileDropdown.contains(event.target)) {
+                    const content = document.querySelector('.profile-dropdown .dropdown-content');
+                    if (content) content.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
