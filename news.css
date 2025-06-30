@@ -133,6 +133,37 @@
     font-size: 1rem;
 }
 
+/* AgriHub Button */
+.agrihub-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, #6a82fb, #fc5c7d);
+    /* blue to pink gradient */
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(106, 130, 251, 0.2);
+    border: none;
+    cursor: pointer;
+}
+
+.agrihub-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(252, 92, 125, 0.3);
+    color: white;
+    text-decoration: none;
+    opacity: 0.95;
+}
+
+.agrihub-btn i {
+    font-size: 1rem;
+}
+
 /* Content Layout */
 .content-wrapper {
     display: grid;
